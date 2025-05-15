@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { auth } from "@/lib/auth";
-import { Project, Version, Log } from "@/types";
+// import { Project, Version, Log } from "@/types";
 
 export async function GET(
     req: Request,
@@ -10,9 +10,7 @@ export async function GET(
     const { apiKey } = await params;
 
     const { valid, key } = await auth.api.verifyApiKey({
-        body: {
-            key: apiKey,
-        },
+        body: { key: apiKey },
     });
 
     if (!valid || !key) {
@@ -20,53 +18,48 @@ export async function GET(
     }
 
     const validatedKey = await db.apikey.findUnique({
-        where: {
-            id: key.id
-        },
+        where: { id: key.id },
         include: {
             project: {
                 include: {
                     versions: {
                         include: {
                             logs: {
-                                orderBy: {
-                                    createdAt: "desc",
-                                }
+                                orderBy: { createdAt: "desc" },
                             },
                         },
-                        orderBy: {
-                            name: "desc",
-                        }
-                    }
-                }
-            }
-        }
+                        orderBy: { name: "desc" },
+                    },
+                },
+            },
+        },
     });
 
     if (!validatedKey || !validatedKey.project) {
         return NextResponse.json({ error: "No project data found." }, { status: 404 });
     }
 
-    const data = validatedKey.project.flatMap((project) =>
-        project.versions.flatMap((version) =>
-            version.logs.map((log) => ({
-                project: {
-                    id: project.id,
-                    name: project.name,
-                } as Project,
-                version: {
-                    id: version.id,
-                    name: version.name,
-                    createdAt: version.createdAt,
-                } as Version,
-                log: {
-                    id: log.id,
-                    message: log.message,
-                    createdAt: log.createdAt,
-                } as Log,
-            }))
-        )
-    );
+    const project = validatedKey.project[0];
+
+    if (!project) {
+        return NextResponse.json({ error: "No project found." }, { status: 404 });
+    }
+
+    const data = {
+        id: project.id,
+        name: project.name,
+        versions: project.versions.map((version) => ({
+            id: version.id,
+            name: version.name,
+            createdAt: version.createdAt,
+            logs: version.logs.map((log) => ({
+                id: log.id,
+                message: log.message,
+                createdAt: log.createdAt,
+            })),
+        })),
+    };
 
     return NextResponse.json({ data });
 }
+
