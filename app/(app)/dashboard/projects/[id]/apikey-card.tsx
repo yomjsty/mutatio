@@ -25,7 +25,7 @@ import {
     AlertDialogAction,
 } from "@/components/ui/alert-dialog"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { ClipboardIcon, KeyIcon, TrashIcon, CheckIcon, Calendar } from "lucide-react"
+import { ClipboardIcon, KeyIcon, TrashIcon, CheckIcon } from "lucide-react"
 import { toast } from "sonner"
 import { createProjectApiKey } from "@/actions/apikey"
 import { authClient } from "@/lib/auth-client"
@@ -125,7 +125,7 @@ export function ApiKeyCard({ projectId, projectName, apiKey }: Props) {
                                 </div>
                             )}
                             <p className="text-sm text-muted-foreground mt-1">
-                                <Calendar className="h-4 w-4" />: {new Date(apiKey.createdAt).toLocaleDateString('en-US', {
+                                Created At: {new Date(apiKey.createdAt).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'numeric',
                                     day: 'numeric'
