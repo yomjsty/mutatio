@@ -24,6 +24,9 @@ export default function Navbar() {
                     <Link href="/help" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                         Help
                     </Link>
+                    <Link href="/changelogs" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                        Changelogs (Example)
+                    </Link>
                 </nav>
                 <div className="flex items-center gap-4">
                     <Link href="/login">

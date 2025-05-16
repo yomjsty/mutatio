@@ -23,6 +23,9 @@ export default function Footer() {
                     <Link target="_blank" href="https://instagram.com/akbarknawan" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                         Contact
                     </Link>
+                    <Link href="/changelogs" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                        Changelogs (Example)
+                    </Link>
                 </nav>
                 <div className="text-sm text-muted-foreground">
                     © {new Date().getFullYear()} Mutatio. All rights reserved.

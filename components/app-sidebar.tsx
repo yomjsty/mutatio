@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import {
+  IconExclamationCircle,
   // IconChartBar,
   IconFileText,
   IconHelp,
@@ -59,6 +60,11 @@ const data = {
     // },
   ],
   navSecondary: [
+    {
+      title: "Changelogs (Example)",
+      url: "/changelogs",
+      icon: IconExclamationCircle,
+    },
     {
       title: "Settings",
       url: "/settings",
