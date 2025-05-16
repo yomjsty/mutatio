@@ -1,48 +1,42 @@
-export default function HelpPage() {
+"use client";
+
+import { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+const CodeBlock = ({ code, language }: { code: string; language: string }) => {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
-        <div className="max-w-3xl mx-auto p-6 space-y-6 py-24">
-            <h1 className="text-3xl font-bold">Help</h1>
+        <div className="relative mb-4">
+            <button
+                onClick={handleCopy}
+                className="absolute top-2 right-2 text-xs px-2 py-1 bg-gray-800 text-white rounded hover:bg-gray-700"
+            >
+                {copied ? "Copied!" : "Copy"}
+            </button>
+            <SyntaxHighlighter language={language} style={oneDark} customStyle={{ borderRadius: "0.5rem", padding: "1rem" }}>
+                {code}
+            </SyntaxHighlighter>
+        </div>
+    );
+};
 
-            <p>
-                Mutatio adalah platform untuk mencatat dan membagikan changelog proyek kamu secara publik melalui API.
-            </p>
-
-            <h2 className="text-2xl font-semibold">1. Membuat Proyek</h2>
-            <p>
-                Setelah login, kamu bisa membuat proyek baru dari dashboard. Setiap proyek memiliki API key unik.
-            </p>
-
-            <h2 className="text-2xl font-semibold">2. Menambahkan Versi & Changelog</h2>
-            <p>
-                Kamu bisa menambahkan versi (seperti v1.0, v2.0) lalu mencatat perubahan (changelog) di dalamnya.
-            </p>
-
-            <h2 className="text-2xl font-semibold">3. Mengakses Changelog</h2>
-            <p>
-                Changelog bisa diakses publik melalui endpoint:
-                <br />
-                <code className="bg-gray-100 p-1 rounded block mt-2">
-                    https://mutatio.vercel.app/api/public/&lt;API_KEY&gt;
-                </code>
-            </p>
-
-            <h2 className="text-2xl font-semibold">4. Menampilkan Changelog di Website</h2>
-            <p>Kamu bisa fetch dan tampilkan changelog menggunakan kode berikut:</p>
-
-            <div className="bg-gray-100 rounded p-4 overflow-x-auto text-sm">
-                <pre>
-                    {`// getData.ts
+export default function HelpPage() {
+    const getDataCode = `// getData.ts
 export async function getData() {
     const response = await fetch(\`https://mutatio.vercel.app/api/public/\${process.env.NEXT_PUBLIC_MUTATIO_API_KEY}\`);
     const data = await response.json();
     return data.data;
-}`}
-                </pre>
-            </div>
+}`;
 
-            <div className="bg-gray-100 rounded p-4 overflow-x-auto text-sm">
-                <pre>
-                    {`// page.tsx
+    const pageCode = `// page.tsx
 import React, { Suspense } from 'react';
 import ChangelogsList from "./changelog-list";
 import { getData } from "@/lib/changelog-utils";
@@ -58,13 +52,9 @@ export default async function ChangelogsPage() {
             </Suspense>
         </div>
     );
-}`}
-                </pre>
-            </div>
+}`;
 
-            <div className="bg-gray-100 rounded p-4 overflow-x-auto text-sm">
-                <pre>
-                    {`// changelog-list.tsx
+    const listCode = `// changelog-list.tsx
 "use client";
 
 import { use } from "react";
@@ -121,12 +111,85 @@ export default function ChangelogsList({ changeLogsPromise }: { changeLogsPromis
             </div>
         </div>
     );
-}`}
-                </pre>
-            </div>
+}`;
+
+    return (
+        <div className="max-w-3xl mx-auto p-6 space-y-6 py-24">
+            <h1 className="text-3xl font-bold">Help</h1>
 
             <p>
-                Jika kamu butuh bantuan lebih lanjut, silakan hubungi kami di{" "}
+                Mutatio is a platform for recording and publicly sharing your project&apos;s changelogs via API.
+            </p>
+
+            <h2 className="text-2xl font-semibold">1. Create a Project</h2>
+            <p>
+                After logging in, you can create a new project from your dashboard. Each project gets a unique API key.
+            </p>
+
+            <h2 className="text-2xl font-semibold">2. Add Versions & Changelogs</h2>
+            <p>
+                You can add versions (e.g., v1.0, v2.0) and log your changes under each version.
+            </p>
+
+            <h2 className="text-2xl font-semibold">3. Access Changelog via API</h2>
+            <p>
+                Changelogs are publicly accessible via:
+            </p>
+            <CodeBlock
+                code={`https://mutatio.vercel.app/api/public/<API_KEY>`}
+                language="bash"
+            />
+
+            <h2 className="text-2xl font-semibold">3.1 Sample API Response</h2>
+            <p>
+                Here&apos;s an example of the JSON structure returned by the public API endpoint:
+            </p>
+            <CodeBlock
+                code={`{
+  "data": {
+    "id": "e2d5e002-6f74-4852-a869-b2be6f7c0339",
+    "name": "Mutatio Project",
+    "versions": [
+      {
+        "id": "aac33701-4bcf-4bf8-8056-a1fb7971e2c9",
+        "name": "v1",
+        "createdAt": "2025-05-16T10:40:29.255Z",
+        "logs": [
+          {
+            "id": "d7d0818b-9511-40e3-80bf-1b58ee9cd853",
+            "message": "(Example from BetterAuth) Authentication type missing on refershToken options",
+            "createdAt": "2025-05-16T10:41:57.415Z"
+          },
+          {
+            "id": "a4eac29c-4042-4a32-bfa9-b567ad259fc4",
+            "message": "(Example from BetterAuth) Added c.authentication to refresh token",
+            "createdAt": "2025-05-16T10:41:38.353Z"
+          },
+          {
+            "id": "1b8918d7-33f2-45e6-b3af-3dbb40ac3c9d",
+            "message": "(Example from BetterAuth) plugin: Error code support for haveibeenpwned plugin",
+            "createdAt": "2025-05-16T10:41:07.589Z"
+          }
+        ]
+      }
+    ]
+  }
+}`}
+                language="json"
+            />
+
+
+            <h2 className="text-2xl font-semibold">4. Displaying Changelog on Your Website</h2>
+            <p className="mb-2">
+                The examples below using <strong>Next.js 15</strong> with <code>Server Actions</code>:
+            </p>
+
+            <CodeBlock code={getDataCode} language="tsx" />
+            <CodeBlock code={pageCode} language="tsx" />
+            <CodeBlock code={listCode} language="tsx" />
+
+            <p>
+                Need more help? Feel free to contact us at{" "}
                 <a href="mailto:support@mutatio.pro" className="text-blue-600 line-through">
                     support@mutatio.pro
                 </a>.
