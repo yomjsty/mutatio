@@ -1,23 +1,18 @@
-// import ChangelogList from "./changelog-list";
-
-// export default function ChangelogsPage() {
-//     const apiKey = process.env.NEXT_PUBLIC_MUTATIO_API_KEY!;
-
-//     return (
-//         <div className="container mx-auto px-4 py-8">
-//             <h2 className="text-2xl font-bold mb-4">Mutatio Changelogs</h2>
-//             <ChangelogList apiKey={apiKey} />
-//         </div>
-//     );
-// }
+export const dynamic = "force-dynamic";
 
 import React, { Suspense } from 'react';
-import ChangelogsList from "./changelog-list";
+import ChangelogsList, { Project } from "./changelog-list";
 import { getData } from "@/lib/changelog-utils";
 
 export default async function ChangelogsPage() {
-    const changeLogsPromise = getData();
+    let changeLogsPromise: Promise<Project | null>;
 
+    try {
+        changeLogsPromise = getData();
+    } catch (e) {
+        console.error("Error fetching data:", e);
+        changeLogsPromise = Promise.resolve(null);
+    }
     return (
         <div className="container mx-auto px-4 py-8">
             <h2 className="text-2xl font-bold mb-4">Mutatio Changelogs</h2>
