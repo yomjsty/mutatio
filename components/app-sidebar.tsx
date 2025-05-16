@@ -2,16 +2,16 @@
 
 import * as React from "react"
 import {
-  IconChartBar,
+  // IconChartBar,
   IconFileText,
   IconHelp,
   IconHome2,
   IconInnerShadowTop,
-  IconKey,
+  // IconKey,
   IconSettings,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "@/components/nav-documents"
+// import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
@@ -45,18 +45,18 @@ const data = {
       url: "/dashboard/projects",
       icon: IconFileText,
     },
-    {
-      title: "API Keys",
-      // url: "/dashboard/api-keys",
-      url: "#",
-      icon: IconKey,
-    },
-    {
-      title: "Analytics",
-      // url: "/dashboard/analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
+    // {
+    //   title: "API Keys",
+    //   url: "/dashboard/api-keys",
+    //   url: "#",
+    //   icon: IconKey,
+    // },
+    // {
+    //   title: "Analytics",
+    //   url: "/dashboard/analytics",
+    //   url: "#",
+    //   icon: IconChartBar,
+    // },
   ],
   navSecondary: [
     {
@@ -72,7 +72,7 @@ const data = {
   ],
   recentProjects: [
     {
-      name: "Changelog Mutatio.pro",
+      name: "Changelog Mutatio",
       url: "#",
       icon: IconFileText,
     },
@@ -95,7 +95,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             >
               <Link href="/dashboard">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Mutatio.pro</span>
+                <span className="text-base font-semibold">Mutatio</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -103,7 +103,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.recentProjects} />
+        {/* <NavDocuments items={data.recentProjects} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

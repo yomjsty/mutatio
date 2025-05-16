@@ -39,7 +39,7 @@ export default function LoginPage() {
                                 </div>
                             </div>
                             <h1 className="text-2xl font-bold">
-                                Welcome to Mutatio.pro
+                                Welcome to Mutatio
                             </h1>
                             <p className="text-gray-500 mt-2">
                                 Sign in to manage your changelogs
@@ -132,7 +132,7 @@ export default function LoginPage() {
             <footer className="py-6 text-center text-sm text-gray-500 border-t border-gray-100">
                 <div className="container mx-auto">
                     <p>
-                        © {new Date().getFullYear()} Mutatio.pro. All rights
+                        © {new Date().getFullYear()} Mutatio. All rights
                         reserved.
                     </p>
                     <div className="mt-2 flex justify-center space-x-4">

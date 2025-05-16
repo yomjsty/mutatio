@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+// import { ArrowUpRight } from "lucide-react";
 
 interface ProjectCardProps {
     id: string;
@@ -13,7 +13,7 @@ interface ProjectCardProps {
     entries: number;
     createdAt: string;
     lastUpdated: string;
-    apiHits: number;
+    apiHits: number | string;
 }
 
 export function ProjectCard({
@@ -34,7 +34,7 @@ export function ProjectCard({
                         {entries} entries
                     </Badge>
                 </div>
-                <CardDescription className="line-clamp-1">{description}</CardDescription>
+                <CardDescription className="line-clamp-2">{description}</CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
                 <div className="grid grid-cols-2 gap-2">
@@ -57,8 +57,7 @@ export function ProjectCard({
                     <div>
                         <p className="text-muted-foreground">API Hits</p>
                         <p>
-                            {/* {apiHits.toLocaleString()} */}
-                            Soon
+                            {typeof apiHits === 'number' ? apiHits.toLocaleString() : apiHits}
                         </p>
                     </div>
                 </div>
@@ -67,9 +66,9 @@ export function ProjectCard({
                 <Button variant="outline" size="sm" asChild>
                     <Link href={`/dashboard/projects/${id}`}>Manage</Link>
                 </Button>
-                <Button variant="ghost" size="sm" className="gap-1">
+                {/* <Button variant="ghost" size="sm" className="gap-1">
                     View API <ArrowUpRight className="h-3 w-3" />
-                </Button>
+                </Button> */}
             </CardFooter>
         </Card>
     );

@@ -124,7 +124,7 @@ model Project {
   apiKeyId String?
   apiKey   Apikey? @relation(fields: [apiKeyId], references: [id], onDelete: SetNull)
 
-  isPublic Boolean @default(false)
+  isPublic Boolean @default(true)
 
   @@map("project")
 }

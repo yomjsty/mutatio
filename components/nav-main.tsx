@@ -29,7 +29,7 @@ export function NavMain({
             <SidebarMenuItem className="flex items-center gap-2">
               <SidebarMenuButton
                 tooltip="New Project"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
+                className="cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
               >
                 <IconCirclePlusFilled />
                 <span>New Project</span>
@@ -41,8 +41,8 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <Link href={item.url} key={item.title}>
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton tooltip={item.title}>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip={item.title} className="cursor-pointer">
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                 </SidebarMenuButton>

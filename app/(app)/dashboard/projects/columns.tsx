@@ -19,7 +19,6 @@ import { useTransition } from "react"
 import { AlertDialog, AlertDialogHeader, AlertDialogContent, AlertDialogTrigger, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction, AlertDialogFooter } from "@/components/ui/alert-dialog"
 import { useQueryClient } from "@tanstack/react-query"
 
-// Tipe data Project kamu
 export type Project = {
     id: string
     name: string
@@ -28,7 +27,7 @@ export type Project = {
     entries: number
     createdAt: string
     updatedAt: string
-    APIHits: number
+    APIHits: number | string
     Owner: string
 }
 
@@ -63,7 +62,6 @@ function ActionCell({ project }: { project: Project }) {
                     <Link href={`/dashboard/projects/${project.id}`}>
                         <DropdownMenuItem>View Project</DropdownMenuItem>
                     </Link>
-                    <DropdownMenuItem>View API</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                         <AlertDialog>
@@ -111,7 +109,7 @@ export const columns: ColumnDef<Project>[] = [
                 <div>
                     <div className="font-medium">{name}</div>
                     {description && (
-                        <div className="text-xs text-muted-foreground">{description}</div>
+                        <div className="text-xs text-muted-foreground max-w-[250px] line-clamp-2 text-wrap">{description}</div>
                     )}
                 </div>
             )
@@ -207,8 +205,8 @@ export const columns: ColumnDef<Project>[] = [
             )
         },
         cell: ({ getValue }) => {
-            const hits = getValue() as number
-            return hits.toLocaleString()
+            const hits = getValue()
+            return typeof hits === 'number' ? hits.toLocaleString() : hits
         },
     },
     {

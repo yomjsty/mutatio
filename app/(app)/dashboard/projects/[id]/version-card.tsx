@@ -79,7 +79,7 @@ export function VersionCard({ version }: VersionCardProps) {
 
             <LogList logs={version.logs} projectId={version.projectId} />
             <p className="text-sm text-gray-500 mt-4 flex items-center gap-2">
-                <Calendar className="h-4 w-4" /> {new Date(version.createdAt).toLocaleDateString('en-US', {
+                <Calendar className="h-4 w-4" /> Created at {new Date(version.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'numeric',
                     day: 'numeric'

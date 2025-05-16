@@ -32,7 +32,7 @@ export default function DashboardPage() {
     }
 
     const totalEntries = projects.reduce((sum, p) => sum + (p.versions?.reduce((acc, version) => acc + (version.logs?.length || 0), 0) || 0), 0)
-    const totalApiHits = "Soon"
+    const totalApiHits = projects.reduce((sum, p) => sum + (p.apiKey?.requestCount ?? 0), 0)
 
     return (
         <div className="space-y-8">
@@ -71,7 +71,6 @@ export default function DashboardPage() {
                 />
             </div>
 
-            {/* Tabs for Projects and Recent Changelogs */}
             <Tabs defaultValue="projects" className="space-y-4">
                 <TabsList>
                     <TabsTrigger value="projects">Projects</TabsTrigger>
@@ -89,11 +88,10 @@ export default function DashboardPage() {
                                 entries={project.versions?.reduce((acc, version) => acc + (version.logs?.length || 0), 0) || 0}
                                 createdAt={project.createdAt}
                                 lastUpdated={project.updatedAt}
-                                apiHits={0} // Since we don't have API hits in our schema
+                                apiHits={project.apiKey === null ? "No API Key" : (project.apiKey.requestCount ?? 0)}
                             />
                         ))}
 
-                        {/* Add New Project Card */}
                         <Card className="flex flex-col items-center justify-center p-6 border-dashed">
                             <div className="rounded-full bg-muted w-12 h-12 flex items-center justify-center mb-4">
                                 <Plus className="h-6 w-6 text-muted-foreground" />

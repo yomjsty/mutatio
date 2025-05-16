@@ -26,6 +26,9 @@ interface Project {
     apiKeyId: string | null
     isPublic: boolean
     versions: Version[]
+    apiKey: {
+        requestCount: number | null
+    } | null
 }
 
 interface Changelog {
@@ -43,12 +46,12 @@ function transformLogs(logs: Awaited<ReturnType<typeof getAllLogs>>): Changelog[
     return logs.map(log => ({
         id: log.id,
         title: log.message,
-        type: 'update', // Default type since we don't have this in our DB
+        type: 'update',
         version: log.version.name,
         date: log.createdAt.toISOString(),
         projectId: log.version.projectId,
         projectName: log.version.name,
-        severity: 'info' // Default severity since we don't have this in our DB
+        severity: 'info'
     }))
 }
 

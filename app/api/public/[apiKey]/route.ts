@@ -48,16 +48,26 @@ export async function GET(
     const data = {
         id: project.id,
         name: project.name,
-        versions: project.versions.map((version) => ({
-            id: version.id,
-            name: version.name,
-            createdAt: version.createdAt,
-            logs: version.logs.map((log) => ({
-                id: log.id,
-                message: log.message,
-                createdAt: log.createdAt,
-            })),
-        })),
+        versions: project.versions.length === 0 ? { error: "No versions found for this project." } : project.versions.map((version) => {
+            if (version.logs.length === 0) {
+                return {
+                    id: version.id,
+                    name: version.name,
+                    createdAt: version.createdAt,
+                    error: "No logs found for this version."
+                };
+            }
+            return {
+                id: version.id,
+                name: version.name,
+                createdAt: version.createdAt,
+                logs: version.logs.map((log) => ({
+                    id: log.id,
+                    message: log.message,
+                    createdAt: log.createdAt,
+                })),
+            };
+        }),
     };
 
     return NextResponse.json({ data });

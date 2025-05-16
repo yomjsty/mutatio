@@ -12,7 +12,6 @@ export async function createVersion({ name, projectId }: VersionData) {
     const user = await getCurrentUser()
     if (!user) throw new Error('Unauthorized')
 
-    // Validasi apakah proyek ada dan milik user
     const project = await db.project.findUnique({
         where: { id: projectId },
     })
@@ -25,7 +24,6 @@ export async function createVersion({ name, projectId }: VersionData) {
         throw new Error('Unauthorized access to this project')
     }
 
-    // Membuat versi baru untuk proyek
     const version = await db.version.create({
         data: {
             name,

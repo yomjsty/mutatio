@@ -6,7 +6,13 @@ import { useFormStatus } from 'react-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition, useState } from 'react'
-import { toast } from 'sonner' // jika kamu pakai library seperti 'sonner' atau 'react-hot-toast'
+import { toast } from 'sonner'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import Link from "next/link"
+import { Loader2 } from "lucide-react"
 
 interface Project {
     id: string
@@ -24,10 +30,15 @@ function SubmitButton() {
     return (
         <Button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
             disabled={pending}
+            className=""
         >
-            {pending ? 'Creating...' : 'Create Project'}
+            {pending ? (
+                <div className="flex items-center">
+                    <Loader2 className="animate-spin mr-2" />
+                    Creating...
+                </div>
+            ) : 'Create Project'}
         </Button>
     )
 }
@@ -59,35 +70,61 @@ export default function NewProjectPage() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto py-10">
-            <h1 className="text-2xl font-bold mb-6">Create New Project</h1>
-
-            <form action={handleSubmit} className="space-y-6">
+        <div className="space-y-8">
+            <div className="flex items-center gap-2 mb-6">
                 <div>
-                    <label className="block text-sm font-medium mb-1">Project Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        required
-                        className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <h1 className="text-3xl font-bold">Create New Project</h1>
+                    <p className="text-muted-foreground">Add a new project to your dashboard</p>
                 </div>
+            </div>
 
-                <div>
-                    <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea
-                        name="description"
-                        rows={4}
-                        className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
+            <Card className="max-w-2xl mx-auto border-border/40 shadow-sm">
+                <CardHeader className="bg-card/50 pb-4">
+                    <CardTitle className="text-xl">Project Details</CardTitle>
+                    <CardDescription>Enter information about your new project</CardDescription>
+                </CardHeader>
+                <CardContent className="px-6">
+                    <form action={handleSubmit} className="space-y-6">
+                        <div>
+                            <Label className="block text-sm font-medium mb-1">Project Name</Label>
+                            <Input
+                                type="text"
+                                name="name"
+                                required
+                                placeholder="e.g., E-commerce App"
+                            // className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">Choose a descriptive name for your project</p>
+                        </div>
 
-                {errorMessage && (
-                    <p className="text-red-600 text-sm">{errorMessage}</p>
-                )}
+                        <div>
+                            <Label className="block text-sm font-medium mb-1">Description</Label>
+                            <Textarea
+                                name="description"
+                                rows={5}
+                                className="resize-none"
+                                placeholder="Describe your project..."
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                                Optional: Add details about your project&apos;s purpose and goals
+                            </p>
+                        </div>
 
-                <SubmitButton />
-            </form>
+                        {errorMessage && (
+                            <p className="text-red-600 text-sm">{errorMessage}</p>
+                        )}
+
+                        <div className="flex justify-end gap-3 pt-4">
+                            <Link href="/dashboard/projects">
+                                <Button type="button" variant="outline">
+                                    Cancel
+                                </Button>
+                            </Link>
+                            <SubmitButton />
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
         </div>
     )
 }

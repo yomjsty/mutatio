@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  IconCreditCard,
+  // IconCreditCard,
   IconDotsVertical,
   IconLogout,
-  IconNotification,
-  IconUserCircle,
+  // IconNotification,
+  // IconUserCircle,
 } from "@tabler/icons-react"
 
 import {
@@ -16,7 +16,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
+  // DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -84,7 +84,7 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <IconUserCircle />
@@ -98,9 +98,9 @@ export function NavUser({
                 <IconNotification />
                 Notifications
               </DropdownMenuItem>
-            </DropdownMenuGroup>
+            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={async () => await authClient.signOut({
+            <DropdownMenuItem className="cursor-pointer" onClick={async () => await authClient.signOut({
               fetchOptions: {
                 onSuccess: () => {
                   router.push("/login");

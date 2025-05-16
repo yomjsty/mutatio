@@ -42,6 +42,7 @@ export async function getAllProjects() {
                     name: 'desc',
                 },
             },
+            apiKey: true,
             user: true,
         },
         orderBy: {
