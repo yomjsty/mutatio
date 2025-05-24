@@ -26,7 +26,7 @@ export default function AboutPage() {
                 Built with ❤️ using Next.js 15 and made for the modern web.
             </p>
 
-            <Link href="https://akbarknawan.vercel.app/" target="_blank" className="text-blue-600 line-through">
+            <Link href="https://akbarknawan.vercel.app/" target="_blank" className="text-blue-600">
                 See my other projects
             </Link>
         </div>
