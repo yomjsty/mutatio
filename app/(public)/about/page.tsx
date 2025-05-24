@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function AboutPage() {
     return (
         // <div className="min-h-screen flex items-center justify-center">
@@ -23,6 +25,10 @@ export default function AboutPage() {
             <p>
                 Built with ❤️ using Next.js 15 and made for the modern web.
             </p>
+
+            <Link href="https://akbarknawan.vercel.app/" target="_blank" className="text-blue-600 line-through">
+                See my other projects
+            </Link>
         </div>
         // </div>
     );

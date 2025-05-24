@@ -20,8 +20,8 @@ export default function Footer() {
                     <Link href="/help" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                         Help
                     </Link>
-                    <Link target="_blank" href="https://instagram.com/akbarknawan" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                        Contact
+                    <Link target="_blank" href="https://akbarknawan.vercel.app/" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                        Contact me
                     </Link>
                     <Link href="/changelogs" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                         Changelogs (Example)
