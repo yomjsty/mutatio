@@ -7,7 +7,6 @@ import {
   IconFileText,
   IconHelp,
   IconHome2,
-  IconInnerShadowTop,
   // IconKey,
   IconSettings,
 } from "@tabler/icons-react"
@@ -26,6 +25,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import { BarChart3Icon } from "lucide-react"
 
 interface User {
   id: string
@@ -100,7 +100,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/dashboard">
-                <IconInnerShadowTop className="!size-5" />
+                <BarChart3Icon className="h-6 w-6 text-primary" />
                 <span className="text-base font-semibold">Mutatio</span>
               </Link>
             </SidebarMenuButton>

@@ -1,18 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Mail, ArrowLeft, Twitter } from "lucide-react";
+import { Github, Mail, ArrowLeft, Twitter, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
 
 export default function LoginPage() {
+    const [isGitHubLoading, setIsGitHubLoading] = useState(false);
+
     const handleSocialLogin = async () => {
-        await authClient.signIn.social({
-            provider: "github",
-            callbackURL: "/dashboard",
-            errorCallbackURL: "/error",
-        });
+        setIsGitHubLoading(true);
+        try {
+            await authClient.signIn.social({
+                provider: "github",
+                callbackURL: "/dashboard",
+                errorCallbackURL: "/error",
+            });
+        } catch (error) {
+            console.error("GitHub login error:", error);
+            setIsGitHubLoading(false);
+        }
     };
 
     return (
@@ -51,9 +60,14 @@ export default function LoginPage() {
                                 variant="outline"
                                 className="w-full justify-start text-base font-normal h-12"
                                 onClick={() => handleSocialLogin()}
+                                disabled={isGitHubLoading}
                             >
-                                <Github className="mr-3 h-5 w-5" />
-                                Continue with GitHub
+                                {isGitHubLoading ? (
+                                    <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                                ) : (
+                                    <Github className="mr-3 h-5 w-5" />
+                                )}
+                                {isGitHubLoading ? "Connecting to GitHub..." : "Continue with GitHub"}
                             </Button>
 
                             <Button
