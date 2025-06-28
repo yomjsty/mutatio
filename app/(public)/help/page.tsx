@@ -188,6 +188,41 @@ export default function ChangelogsList({ changeLogsPromise }: { changeLogsPromis
             <CodeBlock code={pageCode} language="tsx" />
             <CodeBlock code={listCode} language="tsx" />
 
+            <h2 className="text-2xl font-semibold">5. Caching with React Query (Recommended)</h2>
+            <p className="mb-2">
+                For better performance and user experience, we recommend using <strong>React Query</strong> (TanStack Query) to cache your changelog data. This prevents unnecessary API requests on page refreshes and provides automatic background updates.
+            </p>
+
+            <CodeBlock
+                code={`// Use React Query for caching
+import { useQuery } from '@tanstack/react-query'
+
+function ChangelogsList() {
+  const { data: project, isLoading, error } = useQuery({
+    queryKey: ['changelogs'],
+    queryFn: () => fetch('https://mutatio.vercel.app/api/public/YOUR_API_KEY')
+      .then(res => res.json())
+      .then(data => data.data),
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+  })
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading changelogs</div>
+
+  // Render your changelog data here
+  return (
+    <div>
+      {/* Your existing changelog rendering logic */}
+    </div>
+  )
+}`}
+                language="tsx"
+            />
+
+            <p>
+                React Query provides automatic caching, background refetching, and optimistic updates, making your changelog display more efficient and responsive.
+            </p>
+
             <p>
                 Need more help? Feel free to contact us at{" "}
                 <a href="mailto:support@mutatio.pro" className="text-blue-600 line-through">

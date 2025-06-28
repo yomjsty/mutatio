@@ -11,7 +11,7 @@ export default function Loading() {
                     <h1 className="text-3xl font-bold tracking-tight">All Projects</h1>
                     <p className="text-muted-foreground">Manage and monitor all your projects in one place.</p>
                 </div>
-                <Link href="/dashboard/projects/new">
+                <Link href="/dashboard/projects/new">n d
                     <Button className="gap-2">
                         <Plus className="h-4 w-4" />
                         New Project
